@@ -1,11 +1,12 @@
 package br.com.dio.desafio.dominio;
 
+import java.time.LocalDate;
 import java.util.*;
-
 public class Dev {
     private String nome;
     private Set<Conteudo> conteudosInscritos = new LinkedHashSet<>();
     private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
+    private Certificado certificado;
 
     public void inscreverBootcamp(Bootcamp bootcamp){
         this.conteudosInscritos.addAll(bootcamp.getConteudos());
@@ -37,6 +38,18 @@ public class Dev {
                 .sum();*/
     }
 
+    public void gerarCertificado(Bootcamp bootcamp) {
+        if (conteudosInscritos.isEmpty()) {
+            this.certificado = new Certificado(this.nome, bootcamp.getNome(), LocalDate.now());
+            System.out.println(certificado);
+        } else {
+            System.out.println("❌ Ainda existem conteúdos pendentes!");
+        }
+    }
+
+    public Optional<Certificado> getCertificado() {
+        return Optional.ofNullable(certificado);
+    }
 
     public String getNome() {
         return nome;
